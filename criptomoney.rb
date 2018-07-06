@@ -93,6 +93,7 @@ def get_cryptomax_inf6000(tableau)
 end
 
 # On englobe le tout dans la méthode perform
+# On appele tous les méthodes dans cette méthodes
 def perform(devise, montant)
 	puts "appuyez sur entrer"
 	print "> "
