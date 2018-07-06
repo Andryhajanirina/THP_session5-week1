@@ -3,7 +3,9 @@ montant = ["$6558.07", "$468.95", "$0.487526", "$762.84", "$8.86", "$85.26", "$0
 
 puts "Devise : #{devise.count} element trouvé"
 puts "Montant : #{montant.count} element trouvé"
+puts "=========================================="
 
+# Cette méthode associe les devises et les montants correspondants
 def associate_tab(devise, montant)
 	my_hash = {}
 
@@ -17,9 +19,8 @@ def associate_tab(devise, montant)
 	end
 end
 
-associate_tab(devise, montant)
 
-
+# Cette méthode est similaire à celle ci-dessus mais on enlève le "$" pour permettre de récupérer la valeur max et min
 def get_crypto(devise, montant)
 	new_hash = {}
 	i = 0
@@ -31,22 +32,30 @@ def get_crypto(devise, montant)
 	return new_hash
 end
 
-new_hash = get_crypto(devise, montant)
 
-new_hash.each do |key, value|
-	if value == new_hash.values.max
-		puts "================================="
-		puts "La valeur maximal : #{key} => $#{value}"
+# On créer la méthode pour récupérer la valeur maximal des cryptomoney
+# get_cryptomax(new_hash)
+def get_cryptomax(tableau)
+	tableau.each do |key, value|
+		if value == tableau.values.max
+			puts "================================="
+			puts "La valeur maximal : #{key} => $#{value}"
+		end
 	end
 end
 
-new_hash.each do |key, value|
-	if value == new_hash.values.min
-		puts "================================="
-		puts "La valeur minimal : #{key} => $#{value}"
+
+# get_cryptomin(new_hash)
+def get_cryptomin(tableau)
+	tableau.each do |key, value|
+		if value == tableau.values.min
+			puts "================================="
+			puts "La valeur minimal : #{key} => $#{value}"
+		end
 	end
 end
 
+# On cherche le Devise qui contient "coin"
 def search_coin(tableau)
 	nb = 0
 	tableau.each do |key, value|
@@ -58,10 +67,8 @@ def search_coin(tableau)
 	return nb
 end
 
-puts "========================================="
-# search_coin(new_hash)
-puts "On a trouvé #{search_coin(new_hash)} coin dans le tableau"
 
+# crypto_inf_6000 = get_cours_inferieur_6000(new_hash)
 def get_cours_inferieur_6000(tableau)
 	cours  = {}
 
@@ -75,11 +82,51 @@ def get_cours_inferieur_6000(tableau)
 	return cours
 end
 
-max_inf_6000 = get_cours_inferieur_6000(new_hash)
-
-max_inf_6000.each do |key, value|
-	if value == max_inf_6000.values.max
-		puts "================================="
-		puts "La valeur maximal inférieur à 6000 : #{key} => $#{value}"
+# On récupère le cryptomoney inférieur à 6000
+def get_cryptomax_inf6000(tableau)
+	tableau.each do |key, value|
+		if value == tableau.values.max
+			puts "================================="
+			puts "La valeur maximal inférieur à 6000 : #{key} => $#{value}"
+		end
 	end
 end
+
+# On englobe le tout dans la méthode perform
+def perform(devise, montant)
+	puts "appuyez sur entrer"
+	print "> "
+	var1 = gets.chomp
+
+	associate_tab(devise, montant)
+	puts "appuyez sur entrer"
+	print "> "
+	var1 = gets.chomp
+
+	new_hash = get_crypto(devise, montant)
+
+	get_cryptomax(new_hash)
+	puts "appuyez sur entrer"
+	print "> "
+	var1 = gets.chomp
+
+	get_cryptomin(new_hash)
+	puts "appuyez sur entrer"
+	print "> "
+	var1 = gets.chomp
+
+	puts "========================================="
+	puts "On a trouvé #{search_coin(new_hash)} coin dans le tableau"
+	puts "appuyez sur entrer"
+	print "> "
+	var1 = gets.chomp
+
+	crypto_inf_6000 = get_cours_inferieur_6000(new_hash)
+	puts "appuyez sur entrer"
+	print "> "
+	var1 = gets.chomp
+
+	get_cryptomax_inf6000(crypto_inf_6000)
+end
+
+perform(devise, montant)
